@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Welcome {{user}}</h3>
+
+<form action="" method="POST" id="userform">
+		Name:<input type="text" name="name_user" placeholder="Name">
+Mobile no:<input type="text" name="mob" placeholder="Mobile Number">
+E-mail:<input type="text" name="email" placeholder="Email">
+Status of Deal:<select name="deal" id="option">
+  <option>Ongoing</option>
+  <option>Accepted</option>
+  <option>Closed</option>
+</select>
+Comments:<input type="text" id="com" name="comments" placeholder="Comments">
+		<input type="submit" value="Submit">
+
+</div>
+<br><br><table border=1px id="myTable">
+<tr>
+<td><strong>Name</strong></td>
+<td><strong>Mobile Number</strong></td>
+<td><strong>E-mail</strong></td>
+<td><strong>Status of Deal</strong></td>
+<td><strong>Comments</strong></td>
+</tr>
+</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+rows1=1
+function myfunc2()
+{
+	var table=document.getElementById("myTable");
+	var i;
+	{% for row in rows %}
+	var row1= table.insertRow(rows1);
+	row1.style.width="2px";
+	
+	for(i=0;i<5;i++)
+	{
+	var cell =row1.insertCell(i);
+	cell.id="{{row._id}}";
+	if(i==0)
+		cell.innerHTML="{{row.name_user}}";
+	if(i==1)
+		cell.innerHTML="{{row.mob}}";
+	if(i==2)
+		cell.innerHTML="{{row.email}}";
+	if(i==4)
+	{cell.innerHTML="{{row.comments}}";cell.contentEditable=true;cell.style.width="200";cell.onblur=comment}
+	if(i==3)
+	{	
+		var select1=document.createElement("SELECT"); 
+		//select1.id="s"+cell.id;
+		var x = document.createElement("OPTION");
+    var t = document.createTextNode("Ongoing");
+	x.appendChild(t);
+	var x1 = document.createElement("OPTION");
+    var t = document.createTextNode("Accepted");
+	x1.appendChild(t);
+	var x2 = document.createElement("OPTION");
+    var t = document.createTextNode("Closed");
+	x2.appendChild(t);
+	select1.appendChild(x);
+	select1.appendChild(x1);
+	select1.appendChild(x2);
+    cell.appendChild(select1);
+    select1.value="{{row.deal}}";
+    select1.id=cell.id;
+    select1.onclick=select;
+	}
+	//Database
+	}rows1++;
+	{%endfor%}
+}
+myfunc2();
+function comment()
+{
+	var comment1=this.innerHTML;
+	var id1=this.id;
+	$.ajax({
+			type:"GET",//Check and change it to GET
+			url:"/user?name={{user}}",
+			data: {id: id1,comment:comment1},
+
+			success: function(answer)
+			{
+				console.log(answer);
+				alert(answer.comments,answer.id1);
+			},
+			error: function(err)
+			{
+				console.log(err);
+			}
+		});
+	/*var x=document.getElementById('userform1').elements.item(0);
+	var y=document.getElementById('userform1').elements.item(1);
+	x.value=this.id;
+	y.value=this.innerHTML;
+	document.getElementById('userform1').submit();*/
+}
+function select()
+{
+	alert(this.value);
+	/*var x=document.getElementById('userform2').elements.item(0);
+	var y=document.getElementById('userform2').elements.item(1);
+	x.value=this.id;
+	y.value=this.value;
+	document.getElementById('userform2').submit();*/
+}
+</script>
+{%endblock%}
+

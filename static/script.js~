@@ -1,0 +1,15 @@
+/*  jQuery ready function. Specify a function to execute when the DOM is fully loaded.  */
+$(document).ready(function{
+ 
+  /* This is the function that will get executed after the DOM is fully loaded */
+ $('#test').click(function(){
+    var datePickerValue = null;
+
+    $("#d1").datepicker().datepicker("show").change(function ()
+    {
+      datePickerValue = $(this).val();
+      alert("You picked: " + datePickerValue);
+    });
+});
+
+});

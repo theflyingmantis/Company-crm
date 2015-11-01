@@ -1,0 +1,13 @@
+<html>
+<title>{{title}}</title>
+<body>
+<h1>Abhinav Rai's creation</h1><br>
+{% block content %}{% endblock %}
+<br><br>
+<strong><u>
+{%for message in get_flashed_messages()%}
+{{message}}
+{%endfor%}</u>
+</strong>
+</body>
+</html>
