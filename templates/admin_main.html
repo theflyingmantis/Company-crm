@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Welcome Admin</h2>
+<script type="text/javascript" src="{{url_for('static',filename='script.js')}}">
+</script>
+<select id="dealers">
+{% for dlr1 in dlr %}
+<option value="{{dlr1.name}}">{{dlr1.name}}</option>
+{%endfor%}
+</select>
+<button onclick="value">Submit</button>
+
+<!-- <form action="" method="POST" id="signupform">
+Username: <input type = 'text' name='username' placeholder="Username" id = 'username'><br>
+	Password: <input type = 'password' name='password' placeholder="Password" id = 'password'><br>
+	<input type="submit" value="Submit">
+</form> -->
+<!-- {% if flash %}
+	<strong>{{flash}}</strong>
+{% endif %} -->
+<script>
+function value()
+{
+	console.log("In value.YO!!");
+	var dlr=document.getElementById("dealers").value;
+	console.log(dlr);
+	$.ajax({
+			type:"GET",//Check and change it to GET
+			url:"/ajax_admin",
+			data: {dealer: dlr},
+
+			success: function(answer)
+			{
+				console.log(answer);
+				//console.log(answer.comments,answer.id1);
+				alert("Change Ackonowledge");
+			},
+			error: function(err)
+			{
+				console.log(err);
+				alert(err);
+				alert("Error");
+			}
+		});
+
+
+}
+
+</script>
+{%endblock%}

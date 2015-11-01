@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin</h2>
+<form action="" method="POST" id="loginform">
+	Username: <input type = 'text' name='username' placeholder="Username" id = 'username'><br>
+	Password: <input type = 'password' name='password' placeholder="Password" id = 'password'><br>
+	<input type="submit" value="Submit">
+</form>
+{%if error%}
+<script>
+alert("{{error}}");
+</script>
+{%endif%}
+<!--<strong>
+{%for message in get_flashed_messages()%}
+{{message}}
+{%endfor%}
+</strong>-->
+{%endblock%}

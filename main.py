@@ -37,6 +37,17 @@ def login_required(f):
 			return redirect(url_for('login'))		
 	return wrap
 
+def admin_login_required(f):
+	@wraps(f)
+	def wrap(*args,**kwargs):
+		if 'admin_logged' in session:
+			return f(*args,**kwargs)
+		else:
+			flash('Please Login first')
+			return redirect(url_for('admin_login'))		
+	return wrap
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -46,9 +57,11 @@ def home():
 	title="Abhinav's Creation"
 	people=db.people
 	data=db.data
+	admin=db.admin
+	admin.insert({'name':'tanmay','password':'aha3d'})
+	#Can Insert here for more admins.
+	#SHOULD BE UNIQUE
 	#people.insert({'name':'Abhinav','place':'YoYo'})
-	#people.insert({'name':'Manoj','place':'Udaipur'})
-	#title=db.people.find()
 	return render_template('index.html',title=title)		#make a home page
 
 @app.route("/login", methods=['GET','POST'])
@@ -68,6 +81,36 @@ def login():
 			render_template('login.html',title='login',error=error)
 	return render_template('login.html',title='login',error=error)
 		
+
+@app.route("/admin",methods=['GET','POST'])
+def admin():
+	error=None;
+	if (request.method=='POST'):
+		name=request.form['username']
+		password=request.form['password']
+		if(db.admin.find({'name':name,'password':password}).count()>=1):#************************WORKS ONLY FOR ONE USER
+			session['admin_logged']=True
+			flash('Logged in')
+			return redirect(url_for('admin_main'))
+		else:
+			flash('Invalid Credentials')
+			error="Invalid Credentials"
+			render_template('admin.html',title='Admin',error=error)
+	return render_template('admin.html',title='Admin',error=error)
+
+@app.route("/admin_main",methods=['GET','POST'])
+@admin_login_required
+@nocache
+def admin_main():
+	dlr=db.people.find()
+	return render_template('admin_main.html',dlr=dlr)
+
+@app.route("/ajax_admin")
+def ajax_admin():
+	dealer = request.args.get('dealer')
+	ans=db.data.find({'name_user':dealer})
+	return jsonify(ans)
+
 @app.route("/user",methods=['GET','POST'])
 @login_required
 @nocache
@@ -125,7 +168,8 @@ def update_comment():
    	{ '$set':
       	{
         	'comments': comments1
-      	}})
+      	}
+    })
 	data={"comments":comments1,"id1":id1}
 	return jsonify(data)
 
