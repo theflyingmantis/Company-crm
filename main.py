@@ -90,7 +90,6 @@ def admin():
 		password=request.form['password']
 		if(db.admin.find({'name':name,'password':password}).count()>=1):#************************WORKS ONLY FOR ONE USER
 			session['admin_logged']=True
-			flash('Logged in')
 			return redirect(url_for('admin_main'))
 		else:
 			flash('Invalid Credentials')
