@@ -1,23 +1,25 @@
-{% extends "base.html" %}
-{% block content %}
+
+<html>
+<head><title>User {{user}}</title></head>
+<body>
 <script type="text/javascript" src="{{url_for('static',filename='script.js')}}">
 </script>
-<h3>Welcome {{user}}</h3>
+<h4>Welcome {{user}}</h4>
 
 <form action="" method="POST" id="userform" name="myForm" >
-		Name:<input type="text" name="name_user" placeholder="Name" required>
-Mobile no:<input type="number" maxlength="10" minlength="10" name="mob" placeholder="Mobile Number" required>
-E-mail:<input type="email" name="email" placeholder="me@example.com" required>
+		Name:<input type="text" name="name_user" placeholder="Name" id="name" required>
+Mobile no:<input type="number" maxlength="10" minlength="10" name="mob" placeholder="Mobile Number" id="mob" required>
+E-mail:<input type="email" name="email" placeholder="me@example.com" id="email"required>
 Status of Deal:<select name="deal" id="option">
   <option>Ongoing</option>
   <option>Accepted</option>
   <option>Closed</option>
 </select>
-Comments:<input type="text" id="com" name="comments" placeholder="Comments" required>
+Comments:<input type="text" id="com" name="comments" placeholder="Comments" id="comments" required>
 		<input type="submit" value="Submit">
 
 </div>
-<br><br><table border=1px id="myTable">
+<br><br><table border=1px id="myTable" class="bordered">
 <tr>
 <td><strong>Name</strong></td>
 <td><strong>Mobile Number</strong></td>
@@ -122,11 +124,20 @@ function select()
 				alert("Error");
 			}
 		});
-	/*var x=document.getElementById('userform2').elements.item(0);
-	var y=document.getElementById('userform2').elements.item(1);
-	x.value=this.id;
-	y.value=this.value;
-	document.getElementById('userform2').submit();*/
 }
+/*function form_validate()
+{
+var name,mob,email,comments;
+name=document.getElementById("name").value;
+mob=document.getElementById("mob").value;
+email=document.getElementById("email").value;
+comments=document.getElementById("comments").value;
+if(name==""||mob=""||email=""||comments="")
+{alert("Please Enter All fields");return false;}
+else return true;
+}*/
 </script>
-{%endblock%}
+<br><br>
+<a href="/logout" >Logout</a> 
+</body>
+</html>

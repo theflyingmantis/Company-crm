@@ -1,7 +1,10 @@
 <html>
+<head>
 <title>{{title}}</title>
+<link type="text/css" rel="stylesheet" href="{{url_for('static',filename='css/materialize.css')}}"  media="screen,projection"/>
+</head>
 <body>
-<h1>Abhinav Rai's Creation</h1><br>
+<h2>Abhinav Rai's Creation</h2><br>
 {% block content %}{% endblock %}
 <br><br>
 <strong><u>
@@ -9,5 +12,11 @@
 {{message}}
 {%endfor%}</u>
 </strong>
+<script type="text/javascript" src="{{url_for('static',filename='js/materialize.js')}}"></script>
+<script>
+	$(document).ready(function() {
+    $('select').material_select();
+});
+</script>
 </body>
 </html>
