@@ -25,22 +25,6 @@ function v1()
 }
 
 
-@app.route("/ajax_admin")
-def ajax_admin():
-	ans=None
-	if (request.method=='POST'):
-		dealer=request.form['dealer']
-		ans=db.data.find({'name':dealer})
-		render_template('admin_main.html',title='Admin',ans=ans)
-	return render_template('admin_main.html',title='Admin',ans=ans)
 
 
 
-<form action="" method="POST" id="adminform" name="myForm">
-<input type="submit" value="Submit">
-</form>
-<select id="dealers" form="adminform">
-{% for dlr1 in dlr %}
-<option value="{{dlr1.name}}">{{dlr1.name}}</option>
-{%endfor%}
-</select>

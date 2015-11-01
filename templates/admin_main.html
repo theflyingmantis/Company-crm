@@ -1,17 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Welcome Admin</h2>
-<script type="text/javascript" src="{{url_for('static',filename='script.js')}}">
-</script>
-<script type="text/javascript" src="{{url_for('static',filename='value.js')}}">
-</script>
-<select id="dealers">
+<form action="" method="POST" id="adminform" name="myForm">
+<select name="dealers">
 {% for dlr1 in dlr %}
 <option value="{{dlr1.name}}">{{dlr1.name}}</option>
 {%endfor%}
 </select>
-<button onclick="value()">Submit</button>
+<input type="submit" value="Submit">
+</form>
 
+<table border="1px">
+<tr>
+	<td><b>Name</b></td>
+	<td><b>Mobile</b></td>
+	<td><b>Email</b></td>
+	<td><b>Deal</b></td>
+	<td><b>Comments</b></td>
+</tr>
+{%if ans%}
+{%for ans1 in ans%}
+<tr>
+	<td>{{ans1.name_user}}</td>
+	<td>{{ans1.mob}}</td>
+	<td>{{ans1.email}}</td>
+	<td>{{ans1.deal}}</td>
+	<td>{{ans1.comments}}</td>
+</tr>
+{%endfor%}
+{%endif%}
+</table>
 <!-- <form action="" method="POST" id="signupform">
 Username: <input type = 'text' name='username' placeholder="Username" id = 'username'><br>
 	Password: <input type = 'password' name='password' placeholder="Password" id = 'password'><br>

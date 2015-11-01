@@ -44,7 +44,7 @@ def admin_login_required(f):
 			return f(*args,**kwargs)
 		else:
 			flash('Please Login first')
-			return redirect(url_for('admin_login'))		
+			return redirect(url_for('admin'))		
 	return wrap
 
 
@@ -95,7 +95,7 @@ def admin():
 		else:
 			flash('Invalid Credentials')
 			error="Invalid Credentials"
-			render_template('admin.html',title='Admin',error=error)
+			return render_template('admin.html',title='Admin',error=error)
 	return render_template('admin.html',title='Admin',error=error)
 
 @app.route("/admin_main",methods=['GET','POST'])
@@ -103,24 +103,13 @@ def admin():
 @nocache
 def admin_main():
 	dlr=db.people.find()
-	return render_template('admin_main.html',dlr=dlr)
-
-@app.route("/ajax_admin")
-def ajax_admin():
-	dealer = request.args.get('dealer')
-	ans=db.data.find({'name':dealer})
-	val=0
-	list1=[]
-	for f in ans:
-		name1=f.name_user
-		mob1=f.mob
-		email1=f.email
-		deal1=f.deal1
-		comments1=f.comments
-		#val=val+1
-		answer={"name":name1,"mob":mob1,"email":email1,"deal":deal1,"comments":comments1}
-		list1.insert(answer)
-	return jsonify(answer)
+	ans=None
+	if (request.method=='POST'):
+		dealer=request.form['dealers']
+		ans=db.data.find({'name':dealer})
+		return render_template('admin_main.html',title='Admin',ans=ans,dlr=dlr)
+	return render_template('admin_main.html',title='Admin',ans=ans,dlr=dlr)
+	
 
 @app.route("/user",methods=['GET','POST'])
 @login_required
@@ -152,6 +141,16 @@ def logout():
 	#response.headers['Cache-Control'] = 'no-cache'
 	flash("Logged out")
 	return redirect(url_for('home'))	#Displaying Messages - HOW ***************************************************Best by Flash??
+
+@app.route("/admin_logout")
+@admin_login_required
+#@nocache
+def admin_logout():
+	
+	session.pop('admin_logged',None)
+	#response.headers['Cache-Control'] = 'no-cache'
+	flash("Logged out")
+	return redirect(url_for('home'))
 
 @app.route("/signup", methods=['GET','POST'])
 def signup():
