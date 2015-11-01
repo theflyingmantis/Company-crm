@@ -108,8 +108,19 @@ def admin_main():
 @app.route("/ajax_admin")
 def ajax_admin():
 	dealer = request.args.get('dealer')
-	ans=db.data.find({'name_user':dealer})
-	return jsonify(ans)
+	ans=db.data.find({'name':dealer})
+	val=0
+	list1=[]
+	for f in ans:
+		name1=f.name_user
+		mob1=f.mob
+		email1=f.email
+		deal1=f.deal1
+		comments1=f.comments
+		#val=val+1
+		answer={"name":name1,"mob":mob1,"email":email1,"deal":deal1,"comments":comments1}
+		list1.insert(answer)
+	return jsonify(answer)
 
 @app.route("/user",methods=['GET','POST'])
 @login_required

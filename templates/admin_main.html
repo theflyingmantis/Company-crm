@@ -3,6 +3,8 @@
 <h2>Welcome Admin</h2>
 <script type="text/javascript" src="{{url_for('static',filename='script.js')}}">
 </script>
+<script type="text/javascript" src="{{url_for('static',filename='value.js')}}">
+</script>
 <select id="dealers">
 {% for dlr1 in dlr %}
 <option value="{{dlr1.name}}">{{dlr1.name}}</option>
@@ -18,6 +20,5 @@ Username: <input type = 'text' name='username' placeholder="Username" id = 'user
 <!-- {% if flash %}
 	<strong>{{flash}}</strong>
 {% endif %} -->
-<script type="text/javascript" src="{{url_for('static',filename='value.js')}}">
-</script>
+
 {%endblock%}
