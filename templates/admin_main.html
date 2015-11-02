@@ -1,8 +1,13 @@
 <html>
+<head>
 <title>{{title}}
 </title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
 <body>
-<h2>Welcome Admin</h2>
+<h2><b>Welcome Admin</b></h2>
 <form action="" method="POST" id="adminform" name="myForm">
 <select name="dealers">
 {% for dlr1 in dlr %}
@@ -11,8 +16,12 @@
 </select>
 <input type="submit" value="Submit">
 </form>
-<h3> Dealer {{dealer}}</h3>
-<table border="1px">
+{%if detail%}
+<h3> Dealer Name:&nbsp;&nbsp;&nbsp;{{detail.full_name}}</h3>
+<h3> Mobile No.:&nbsp;&nbsp;&nbsp;&nbsp;{{detail.mob}}</h3>
+<h3> Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{detail.email}}</h3>
+{%endif%}
+<table border="1px" class="table table-hover table-condensed">
 <tr>
 	<td><b>Name</b></td>
 	<td><b>Mobile</b></td>
@@ -21,6 +30,7 @@
 	<td><b>Comments</b></td>
 </tr>
 {%if ans%}
+<br><br>
 {%for ans1 in ans%}
 <tr>
 	<td>{{ans1.name_user}}</td>
@@ -33,7 +43,7 @@
 {%endif%}
 </table>
 <br>
-<a href="/admin_logout" class="waves-effect waves-light btn">Logout</a>
+<a href="/admin_logout" class="btn btn-info">Logout</a>
 
 <!-- <form action="" method="POST" id="signupform">
 Username: <input type = 'text' name='username' placeholder="Username" id = 'username'><br>

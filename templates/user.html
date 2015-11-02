@@ -1,12 +1,17 @@
 
 <html>
-<head><title>User {{user}}</title></head>
+<head><title>User {{user.full_name}}</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
 <body>
 <script type="text/javascript" src="{{url_for('static',filename='script.js')}}">
 </script>
-<h4>Welcome {{user}}</h4>
-
-<form action="" method="POST" id="userform" name="myForm" >
+<center><h2>Welcome {{user.full_name}}</h2></center>
+<br>
+<form action="" method="POST" id="userform" name="myForm" role="form" >
 		Name:<input type="text" name="name_user" placeholder="Name" id="name" required>
 Mobile no:<input type="number" maxlength="10" minlength="10" name="mob" placeholder="Mobile Number" id="mob" required>
 E-mail:<input type="email" name="email" placeholder="me@example.com" id="email"required>
@@ -17,10 +22,11 @@ Status of Deal:<select name="deal" id="option">
 </select>
 Comments:<input type="text" id="com" name="comments" placeholder="Comments" id="comments" required>
 		<input type="submit" value="Submit">
-
 </div>
-<br><br><table border=1px id="myTable" class="bordered">
-<tr>
+<br><br><br><br>
+<div class="table-responsive"> 
+<table border=1px id="myTable" class="table table-hover table-condensed">
+<tr bgcolor="yellow">
 <td><strong>Name</strong></td>
 <td><strong>Mobile Number</strong></td>
 <td><strong>E-mail</strong></td>
@@ -28,6 +34,7 @@ Comments:<input type="text" id="com" name="comments" placeholder="Comments" id="
 <td><strong>Comments</strong></td>
 </tr>
 </table>
+</div>
 
 <script>
 rows1=1
@@ -84,7 +91,7 @@ function comment()
 	//comment1= comment1.replace(/<br>/g, "	");
 	//comment1 = comment1.replace("&nbsp;", " ");
 	//comment1 = comment1.replace("<br>", "    ");
-	alert(comment1);
+	//alert(comment1);
 	var id1=this.id;
 	
 	$.ajax({
@@ -143,6 +150,6 @@ else return true;
 }*/
 </script>
 <br><br>
-<a href="/logout" >Logout</a> 
+<a href="/logout" class="btn btn-info">Logout</a> 
 </body>
 </html>

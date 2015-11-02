@@ -104,10 +104,12 @@ def admin():
 def admin_main():
 	dlr=db.people.find()
 	ans=None
+	detail=None
 	if (request.method=='POST'):
 		dealer=request.form['dealers']
 		ans=db.data.find({'name':dealer})
-		return render_template('admin_main.html',title='Admin',ans=ans,dlr=dlr,dealer=dealer)
+		detail=db.people.find({'name':dealer})
+		return render_template('admin_main.html',title='Admin',ans=ans,dlr=dlr,detail=detail[0])
 	return render_template('admin_main.html',title='Admin',ans=ans,dlr=dlr)
 	
 
@@ -118,6 +120,7 @@ def user():
 	name=request.args['name']
 	name=session['name']
 	#name=request.args.get('name')
+	#import pdb; pdb.set_trace()
 	a=db.people.find({'name':name})
 	#pwd=a.password
 	#See how to submit two forms. Change in Arguments..***************************************************
@@ -130,7 +133,7 @@ def user():
 		#k=name_user+mob+name+email
 		db.data.insert({'name':name,'name_user':name_user,'mob':mob,'email':email,'deal':deal,'comments':comments})#**********************************Id how to use default one/////////////////////////////
 	rows=db.data.find({'name':name})
-	return render_template('user.html',rows=rows,user=name,title="User "+name)
+	return render_template('user.html',rows=rows,user=a[0],title="User "+name)
 	
 
 
@@ -167,7 +170,7 @@ def signup():
 			return render_template('signup.html',title='signup',error=error,flash=flash1)
 		else:
 			flash('User signed up')
-			db.people.insert({'name':name,'password':request.form['password'],'email':request.form['dlr_email'],'mob':request.form['mob']})
+			db.people.insert({'name':name,'password':request.form['password'],'full_name':request.form['full_name'],'email':request.form['dlr_email'],'mob':request.form['mob']})
 			return redirect(url_for('home'))
 	return render_template('signup.html',title='signup',error=error,flash=flash1)
 
