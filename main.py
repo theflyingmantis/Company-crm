@@ -73,8 +73,8 @@ def login():
 		password=request.form['password']
 		if(db.people.find({'name':name,'password':password}).count()>=1):
 			session['logged']=True
-			flash('Logged in')
-			return redirect(url_for('user',name=name))
+			#flash('Logged in')
+			return redirect(url_for('user',name=name))#********************************name by POST
 		else:
 			flash('Invalid Credentials')
 			error="Invalid Credentials"
@@ -106,7 +106,7 @@ def admin_main():
 	if (request.method=='POST'):
 		dealer=request.form['dealers']
 		ans=db.data.find({'name':dealer})
-		return render_template('admin_main.html',title='Admin',ans=ans,dlr=dlr)
+		return render_template('admin_main.html',title='Admin',ans=ans,dlr=dlr,dealer=dealer)
 	return render_template('admin_main.html',title='Admin',ans=ans,dlr=dlr)
 	
 
@@ -171,6 +171,8 @@ def signup():
 @app.route("/update_comment")
 def update_comment():
 	comments1 = request.args.get('comment', type=str)
+	#comments1=comments1.replace('&nbsp;',' ')
+	#comments1=comments1.replace('<br>','\n')
 	id1=request.args.get('id')
 	db.data.update(
    	{ '_id': ObjectId(id1) },
