@@ -2,8 +2,11 @@
 {% block content %}
 <h2>Signup</h2>
 <form action="" method="POST" id="signupform">
-Username: <input type = 'text' name='username' placeholder="Username" id = 'username'><br>
-	Password: <input type = 'password' name='password' placeholder="Password" id = 'password'><br>
+Full Name:<input type = 'text' name='full_name' placeholder="Full Name" id = 'full_name' required><br>
+Mobile:<input type = 'text' name='mob' placeholder="Mobile Number" id = 'mob' required><br>
+Email:<input type = 'email' name='dlr_email' placeholder="me@abc.xyz" id = 'dlr_email' required><br>
+Username: <input type = 'text' name='username' placeholder="Username" id = 'username' required><br>
+	Password: <input type = 'password' name='password' placeholder="Password" id = 'password' required><br>
 	<input type="submit" value="Submit">
 </form>
 {% if flash %}

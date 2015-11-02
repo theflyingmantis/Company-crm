@@ -73,6 +73,7 @@ def login():
 		password=request.form['password']
 		if(db.people.find({'name':name,'password':password}).count()>=1):
 			session['logged']=True
+			session['name'] = name
 			#flash('Logged in')
 			return redirect(url_for('user',name=name))#********************************name by POST
 		else:
@@ -114,7 +115,9 @@ def admin_main():
 @login_required
 @nocache
 def user():
-	name=request.args.get('name')
+	name=request.args['name']
+	name=session['name']
+	#name=request.args.get('name')
 	a=db.people.find({'name':name})
 	#pwd=a.password
 	#See how to submit two forms. Change in Arguments..***************************************************
@@ -164,15 +167,16 @@ def signup():
 			return render_template('signup.html',title='signup',error=error,flash=flash1)
 		else:
 			flash('User signed up')
-			db.people.insert({'name':name,'password':request.form['password']})
+			db.people.insert({'name':name,'password':request.form['password'],'email':request.form['dlr_email'],'mob':request.form['mob']})
 			return redirect(url_for('home'))
 	return render_template('signup.html',title='signup',error=error,flash=flash1)
 
 @app.route("/update_comment")
 def update_comment():
 	comments1 = request.args.get('comment', type=str)
-	#comments1=comments1.replace('&nbsp;',' ')
-	#comments1=comments1.replace('<br>','\n')
+	comments1=comments1.replace('&nbsp;',' ')
+	comments1=comments1.replace('<br>','   ')
+	print comments1
 	id1=request.args.get('id')
 	db.data.update(
    	{ '_id': ObjectId(id1) },

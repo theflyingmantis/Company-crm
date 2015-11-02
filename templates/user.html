@@ -80,6 +80,10 @@ myfunc2();
 function comment()
 {
 	var comment1=this.innerHTML;
+	//comment1= comment1.replace(/&nbsp;/g, " ");
+	//comment1= comment1.replace(/<br>/g, "	");
+	//comment1 = comment1.replace("&nbsp;", " ");
+	//comment1 = comment1.replace("<br>", "    ");
 	alert(comment1);
 	var id1=this.id;
 	
